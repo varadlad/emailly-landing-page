@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emailly - Automated Email Outreach Tool</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'VT323', monospace;
+            line-height: 1.6;
+            color: #333;
+            background: 
+                radial-gradient(circle at 20% 80%, #87CEEB 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, #98FB98 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, #DDA0DD 0%, transparent 50%),
+                linear-gradient(135deg, #FF6B6B 0%, #9370DB 25%, #4ECDC4 50%, #8A2BE2 75%, #45B7D1 100%);
+            min-height: 100vh;
+            image-rendering: pixelated;
+            image-rendering: -moz-crisp-edges;
+            image-rendering: crisp-edges;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Mario-style Header */
+        header {
+            background: 
+                linear-gradient(90deg, #FF6B6B 0%, #9370DB 25%, #FFD93D 50%, #8A2BE2 75%, #4ECDC4 100%);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 
+                0 4px 0 #8B4513,
+                0 8px 0 #654321,
+                inset 0 2px 0 rgba(255,255,255,0.3);
+            border-bottom: 4px solid #8B4513;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #FFD700;
+            text-shadow: 
+                2px 2px 0 #8B4513,
+                4px 4px 0 #654321;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            margin-right: 15px;
+            background: #FFD700;
+            border: 3px solid #8B4513;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #8B4513;
+            font-weight: bold;
+            font-size: 1.5rem;
+            box-shadow: 
+                0 4px 0 #654321,
+                inset 0 2px 0 rgba(255,255,255,0.5);
+            animation: spin 3s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #FFD700;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-shadow: 
+                1px 1px 0 #8B4513,
+                2px 2px 0 #654321;
+            transition: all 0.3s;
+            padding: 8px 16px;
+            background: rgba(139, 69, 19, 0.3);
+            border: 2px solid #8B4513;
+            border-radius: 8px;
+        }
+
+        .nav-links a:hover {
+            color: #FF6B6B;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 
+                0 4px 0 #654321,
+                0 0 10px rgba(255, 215, 0, 0.5);
+        }
+
+        /* Mario-style Hero Section */
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 30% 70%, rgba(255, 215, 0, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 70% 30%, rgba(255, 107, 107, 0.3) 0%, transparent 50%);
+            z-index: -1;
+        }
+
+        .hero h1 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            animation: marioJump 2s infinite;
+            color: #FFD700;
+            text-shadow: 
+                3px 3px 0 #8B4513,
+                6px 6px 0 #654321,
+                0 0 20px rgba(255, 215, 0, 0.5);
+            line-height: 1.2;
+        }
+
+        @keyframes marioJump {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-20px) scale(1.05); }
+        }
+
+        .hero p {
+            font-family: 'VT323', monospace;
+            font-size: 1.6rem;
+            margin-bottom: 2.5rem;
+            opacity: 1;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            animation: fadeInUp 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s both;
+            line-height: 1.8;
+            color: #FFFFFF;
+            text-shadow: 
+                2px 2px 0 #8B4513,
+                4px 4px 0 #654321;
+            font-weight: bold;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.6s both;
+        }
+
+        .btn {
+            padding: 1.2rem 2.5rem;
+            border-radius: 0;
+            text-decoration: none;
+            font-family: 'Press Start 2P', cursive;
+            font-weight: bold;
+            font-size: 0.9rem;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            position: relative;
+            overflow: hidden;
+            border: 4px solid #8B4513;
+            box-shadow: 
+                0 6px 0 #654321,
+                inset 0 2px 0 rgba(255,255,255,0.3);
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #FF6B6B, #FF8E53);
+            color: #FFD700;
+            text-shadow: 1px 1px 0 #8B4513;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-4px);
+            box-shadow: 
+                0 10px 0 #654321,
+                0 0 20px rgba(255, 107, 107, 0.5);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(45deg, #4ECDC4, #45B7D1);
+            color: #FFD700;
+            text-shadow: 1px 1px 0 #8B4513;
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-4px);
+            box-shadow: 
+                0 10px 0 #654321,
+                0 0 20px rgba(78, 205, 196, 0.5);
+        }
+
+        /* Mario-style Features Section */
+        .features {
+            background: 
+                linear-gradient(135deg, #F0F8FF 0%, #E6E6FA 100%);
+            padding: 4rem 0;
+            position: relative;
+        }
+
+        .features::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 20px;
+            background: repeating-linear-gradient(
+                90deg,
+                #8B4513 0px,
+                #8B4513 20px,
+                #654321 20px,
+                #654321 40px
+            );
+        }
+
+        .section-title {
+            text-align: center;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 3rem;
+            color: #8B4513;
+            text-shadow: 
+                2px 2px 0 #FFD700,
+                4px 4px 0 #654321;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+            margin-top: 4rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 0;
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            border: 4px solid #8B4513;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 
+                0 8px 0 #654321,
+                inset 0 2px 0 rgba(255,255,255,0.3);
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: linear-gradient(90deg, #FF6B6B, #9370DB, #FFD93D, #8A2BE2, #4ECDC4);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 
+                0 16px 0 #654321,
+                0 0 30px rgba(139, 69, 19, 0.3);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #FF6B6B, #FF8E53);
+            border: 4px solid #8B4513;
+            border-radius: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: #FFD700;
+            font-size: 2rem;
+            transition: transform 0.3s ease;
+            box-shadow: 
+                0 6px 0 #654321,
+                inset 0 2px 0 rgba(255,255,255,0.3);
+        }
+
+        .feature-card:hover .feature-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .feature-card h3 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            color: #8B4513;
+            text-shadow: 1px 1px 0 #FFD700;
+        }
+
+        .feature-card p {
+            font-family: 'VT323', monospace;
+            color: #2F1B14;
+            line-height: 1.7;
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+
+        /* Mario-style Why Emailly Section */
+        .why-emailly {
+            background: 
+                linear-gradient(135deg, #F0E6FF 0%, #E6E6FA 100%);
+            padding: 4rem 0;
+            position: relative;
+        }
+
+        .why-emailly::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 20px;
+            background: repeating-linear-gradient(
+                90deg,
+                #8B4513 0px,
+                #8B4513 20px,
+                #654321 20px,
+                #654321 40px
+            );
+        }
+
+        .why-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 2.5rem;
+            margin-top: 4rem;
+        }
+
+        .why-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 0;
+            text-align: left;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            border: 4px solid #8B4513;
+            border-left: 8px solid #FF6B6B;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 
+                0 8px 0 #654321,
+                inset 0 2px 0 rgba(255,255,255,0.3);
+        }
+
+        .why-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 
+                0 16px 0 #654321,
+                0 0 30px rgba(139, 69, 19, 0.3);
+        }
+
+        .why-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #4ECDC4, #45B7D1);
+            border: 4px solid #8B4513;
+            border-radius: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            color: #FFD700;
+            font-size: 1.8rem;
+            transition: transform 0.3s ease;
+            box-shadow: 
+                0 6px 0 #654321,
+                inset 0 2px 0 rgba(255,255,255,0.3);
+        }
+
+        .why-card:hover .why-icon {
+            transform: scale(1.1) rotate(-5deg);
+        }
+
+        .why-card h3 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            color: #8B4513;
+            text-shadow: 1px 1px 0 #FFD700;
+        }
+
+        .why-card p {
+            font-family: 'VT323', monospace;
+            color: #2F1B14;
+            line-height: 1.7;
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+
+        /* Mario-style Download Section */
+        .download {
+            background: 
+                linear-gradient(135deg, #FF6B6B 0%, #9370DB 25%, #8A2BE2 50%, #FFD93D 75%, #4ECDC4 100%);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .download::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 20px;
+            background: repeating-linear-gradient(
+                90deg,
+                #8B4513 0px,
+                #8B4513 20px,
+                #654321 20px,
+                #654321 40px
+            );
+        }
+
+        .download h2 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #FFD700;
+            text-shadow: 
+                2px 2px 0 #8B4513,
+                4px 4px 0 #654321;
+        }
+
+        .download p {
+            font-family: 'VT323', monospace;
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 1;
+            color: #FFFFFF;
+            text-shadow: 
+                2px 2px 0 #8B4513,
+                4px 4px 0 #654321;
+            font-weight: bold;
+        }
+
+        .download-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .download-btn {
+            background: white;
+            color: #8B4513;
+            padding: 1rem 2rem;
+            border-radius: 0;
+            text-decoration: none;
+            font-family: 'Press Start 2P', cursive;
+            font-weight: bold;
+            font-size: 0.8rem;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            border: 4px solid #8B4513;
+            box-shadow: 
+                0 6px 0 #654321,
+                inset 0 2px 0 rgba(139, 69, 19, 0.1);
+        }
+
+        .download-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 
+                0 10px 0 #654321,
+                0 0 20px rgba(255, 255, 255, 0.3);
+        }
+
+        /* Mario-style Footer */
+        footer {
+            background: 
+                linear-gradient(135deg, #654321 0%, #8B4513 100%);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            border-top: 4px solid #FFD700;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            font-family: 'Press Start 2P', cursive;
+            margin-bottom: 1rem;
+            color: #FFD700;
+            text-shadow: 1px 1px 0 #8B4513;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section ul li a {
+            font-family: 'VT323', monospace;
+            color: #FFFFFF;
+            text-decoration: none;
+            transition: color 0.3s;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-shadow: 1px 1px 0 #8B4513;
+        }
+
+        .footer-section ul li a:hover {
+            color: #FFD700;
+            text-shadow: 1px 1px 0 #8B4513;
+        }
+
+        .footer-bottom {
+            border-top: 2px solid #FFD700;
+            padding-top: 1rem;
+            color: #FFFFFF;
+            font-family: 'VT323', monospace;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-shadow: 1px 1px 0 #8B4513;
+        }
+
+        /* Enhanced Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes slideInFromBottom {
+            from {
+                opacity: 0;
+                transform: translateY(60px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .download-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .section-title {
+                font-size: 1.4rem;
+            }
+        }
+
+        /* Mario-style floating coins animation */
+        .floating-coins {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .coin {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #FFD700;
+            border: 2px solid #8B4513;
+            border-radius: 50%;
+            animation: coinFloat 6s infinite linear;
+        }
+
+        @keyframes coinFloat {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating coins background -->
+    <div class="floating-coins" id="floatingCoins"></div>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <div class="logo-icon">📧</div>
+                    EMAILLY
+                </div>
+                <div class="nav-links">
+                    <a href="#features">FEATURES</a>
+                    <a href="#why-emailly">WHY EMAILLY</a>
+                    <a href="#download">DOWNLOAD</a>
+                    <a href="https://github.com/yourusername/emailly" target="_blank">GITHUB</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>LEVEL UP YOUR EMAIL OUTREACH!</h1>
+            <p>Transform Apollo CSV exports into personalized Gmail drafts. Perfect for job seekers, recruiters, and anyone doing outreach at scale.</p>
+            <div class="cta-buttons">
+                <a href="#download" class="btn btn-primary">
+                    <span>⬇️</span>
+                    DOWNLOAD EMAILLY
+                </a>
+                <a href="https://github.com/yourusername/emailly" class="btn btn-secondary" target="_blank">
+                    <span>📖</span>
+                    VIEW ON GITHUB
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <h2 class="section-title">POWER-UPS FOR SUCCESSFUL OUTREACH</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>APOLLO CSV INTEGRATION</h3>
+                    <p>Automatically processes Apollo contact exports with smart parsing and data extraction.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>GMAIL AUTOMATION</h3>
+                    <p>Creates personalized email drafts in your Gmail account with professional templates.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">👥</div>
+                    <h3>SMART PERSONALIZATION</h3>
+                    <p>Uses contact data to customize each email automatically for maximum engagement.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🛡️</div>
+                    <h3>DUPLICATE PREVENTION</h3>
+                    <p>Never email the same contact twice with intelligent tracking and duplicate detection.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📈</div>
+                    <h3>PROGRESS TRACKING</h3>
+                    <p>Detailed logs and export reports for campaign management and performance analysis.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">✅</div>
+                    <h3>TEMPLATE SYSTEM</h3>
+                    <p>Professional email templates for different industries and use cases.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Emailly Section -->
+    <section class="why-emailly" id="why-emailly">
+        <div class="container">
+            <h2 class="section-title">WHY EMAILLY IS BETTER</h2>
+            <div class="why-grid">
+                <div class="why-card">
+                    <div class="why-icon">🔒</div>
+                    <h3>PRIVACY FIRST</h3>
+                    <p>All processing happens locally on your computer. Your data never leaves your machine, ensuring complete privacy and security.</p>
+                </div>
+                <div class="why-card">
+                    <div class="why-icon">🚫</div>
+                    <h3>SPAM PREVENTION</h3>
+                    <p>Creates email drafts instead of sending directly. You review and send manually, avoiding spam filters and maintaining control.</p>
+                </div>
+                <div class="why-card">
+                    <div class="why-icon">👀</div>
+                    <h3>MANUAL REVIEW</h3>
+                    <p>Every email is created as a draft in your Gmail. Review, edit, and send when you're ready - no automated sending.</p>
+                </div>
+                <div class="why-card">
+                    <div class="why-icon">🎯</div>
+                    <h3>PERSONALIZED OUTREACH</h3>
+                    <p>Uses real contact data to create genuinely personalized emails, not generic spam messages.</p>
+                </div>
+                <div class="why-card">
+                    <div class="why-icon">📊</div>
+                    <h3>SMART TRACKING</h3>
+                    <p>Intelligent duplicate prevention ensures you never accidentally email the same person twice.</p>
+                </div>
+                <div class="why-card">
+                    <div class="why-icon">⚡</div>
+                    <h3>EFFICIENCY WITHOUT RISK</h3>
+                    <p>Save hours of manual work while maintaining the personal touch that gets responses.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Download Section -->
+    <section class="download" id="download">
+        <div class="container">
+            <h2>READY TO LEVEL UP?</h2>
+            <p>Download Emailly today and start sending personalized emails at scale.</p>
+            <div class="download-buttons">
+                <a href="#" class="download-btn" onclick="downloadForOS('macos')">
+                    <span>🍎</span>
+                    DOWNLOAD FOR MACOS
+                </a>
+                <a href="#" class="download-btn" onclick="downloadForOS('windows')">
+                    <span>🪟</span>
+                    DOWNLOAD FOR WINDOWS
+                </a>
+                <a href="#" class="download-btn" onclick="downloadForOS('linux')">
+                    <span>🐧</span>
+                    DOWNLOAD FOR LINUX
+                </a>
+            </div>
+            <p style="margin-top: 2rem; font-size: 1.2rem; opacity: 1; font-family: 'VT323', monospace; color: #FFFFFF; font-weight: bold; text-shadow: 2px 2px 0 #8B4513;">
+                SYSTEM REQUIREMENTS: PYTHON 3.8+ • GMAIL ACCOUNT • APOLLO CSV EXPORT
+            </p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>EMAILLY</h3>
+                    <p>Automated email outreach tool for job seekers, recruiters, and sales teams.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>PRODUCT</h3>
+                    <ul>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#download">Download</a></li>
+                        <li><a href="#">Documentation</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>COMMUNITY</h3>
+                    <ul>
+                        <li><a href="https://github.com/yourusername/emailly" target="_blank">GitHub</a></li>
+                        <li><a href="#">Issues</a></li>
+                        <li><a href="#">Discussions</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>LEGAL</h3>
+                    <ul>
+                        <li><a href="#">Privacy</a></li>
+                        <li><a href="#">Terms</a></li>
+                        <li><a href="#">License</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 EMAILLY. MADE WITH ❤️ FOR THE JOB SEARCH COMMUNITY.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Create floating coins animation
+        function createFloatingCoins() {
+            const coinsContainer = document.getElementById('floatingCoins');
+            const numCoins = 15;
+            
+            for (let i = 0; i < numCoins; i++) {
+                const coin = document.createElement('div');
+                coin.className = 'coin';
+                coin.style.left = Math.random() * 100 + '%';
+                coin.style.animationDelay = Math.random() * 6 + 's';
+                coin.style.animationDuration = (Math.random() * 3 + 4) + 's';
+                coinsContainer.appendChild(coin);
+            }
+        }
+
+        // Detect OS and update download buttons
+        function detectOS() {
+            const userAgent = navigator.userAgent.toLowerCase();
+            if (userAgent.includes('win')) {
+                return 'windows';
+            } else if (userAgent.includes('mac')) {
+                return 'macos';
+            } else {
+                return 'linux';
+            }
+        }
+
+        // Download function (placeholder for now)
+        function downloadForOS(os) {
+            const downloads = {
+                'macos': 'Emailly-macOS.app.zip',
+                'windows': 'Emailly-Windows.zip',
+                'linux': 'Emailly-Linux.tar.gz'
+            };
+            
+            const filename = downloads[os];
+            alert(`DOWNLOADING ${filename}...\n\nNote: This is a placeholder. Replace with actual download links when you have the executables ready.`);
+            
+            // In production, you would redirect to actual download URLs:
+            // window.location.href = `/downloads/${filename}`;
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Highlight current OS download button
+        window.addEventListener('load', function() {
+            const currentOS = detectOS();
+            const downloadButtons = document.querySelectorAll('.download-btn');
+            
+            downloadButtons.forEach(btn => {
+                if (btn.textContent.toLowerCase().includes(currentOS)) {
+                    btn.style.background = '#FFD700';
+                    btn.style.color = '#8B4513';
+                    btn.style.transform = 'scale(1.05)';
+                }
+            });
+
+            // Initialize scroll animations and floating coins
+            initScrollAnimations();
+            createFloatingCoins();
+        });
+
+        // Scroll-triggered animations
+        function initScrollAnimations() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // Observe feature cards
+            document.querySelectorAll('.feature-card').forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                card.style.transition = `all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) ${index * 0.1}s`;
+                observer.observe(card);
+            });
+
+            // Observe why cards
+            document.querySelectorAll('.why-card').forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                card.style.transition = `all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) ${index * 0.1}s`;
+                observer.observe(card);
+            });
+        }
+    </script>
+</body>
+</html> 
