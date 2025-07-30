@@ -76,16 +76,19 @@
             width: 40px;
             height: 40px;
             margin-right: 15px;
+            background: #FFD700;
+            border: 3px solid #8B4513;
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
+            color: #8B4513;
+            font-weight: bold;
+            font-size: 1.5rem;
+            box-shadow: 
+                0 4px 0 #654321,
+                inset 0 2px 0 rgba(255,255,255,0.5);
             animation: gentleSpin 4s linear infinite;
-        }
-
-        .logo-icon img {
-            width: 100%;
-            height: 100%;
-            filter: drop-shadow(0 2px 0 #654321);
         }
 
         @keyframes gentleSpin {
@@ -164,18 +167,7 @@
             50% { transform: translateY(-8px) scale(1.02); }
         }
 
-        .hero-logo {
-            text-align: center;
-            margin-bottom: 2rem;
-            animation: fadeInUp 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.1s both;
-        }
 
-        .hero-logo img {
-            width: 120px;
-            height: 120px;
-            filter: drop-shadow(0 4px 0 #654321);
-            animation: gentleFloat 3s ease-in-out infinite;
-        }
 
         .hero p {
             font-family: 'VT323', monospace;
@@ -575,16 +567,7 @@
             margin-bottom: 2rem;
         }
 
-        .footer-logo {
-            text-align: center;
-            margin-bottom: 1rem;
-        }
 
-        .footer-logo img {
-            width: 40px;
-            height: 40px;
-            filter: drop-shadow(0 2px 0 #654321);
-        }
 
         .footer-section h3 {
             font-family: 'Press Start 2P', cursive;
@@ -705,10 +688,7 @@
                 font-size: 1.5rem;
             }
 
-            .hero-logo img {
-                width: 100px;
-                height: 100px;
-            }
+
         }
 
         @media (max-width: 768px) {
@@ -722,10 +702,7 @@
                 line-height: 1.6;
             }
 
-            .hero-logo img {
-                width: 80px;
-                height: 80px;
-            }
+
 
             .nav-links {
                 display: none;
@@ -792,10 +769,7 @@
                 font-size: 1.1rem;
             }
 
-            .hero-logo img {
-                width: 60px;
-                height: 60px;
-            }
+
 
             .section-title {
                 font-size: 1.1rem;
@@ -872,9 +846,7 @@
         <div class="container">
             <nav>
                             <div class="logo">
-                <div class="logo-icon">
-                    <img src="logo-small.svg" alt="Emailly Logo" />
-                </div>
+                <div class="logo-icon">📧</div>
                 EMAILLY
             </div>
                 <div class="nav-links">
@@ -890,9 +862,6 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="container">
-            <div class="hero-logo">
-                <img src="logo.svg" alt="Emailly Logo" />
-            </div>
             <h1>LEVEL UP YOUR EMAIL OUTREACH!</h1>
             <p>Transform any Excel sheet with contact data into personalized Gmail drafts. Works with Apollo CSV, LinkedIn exports, or any spreadsheet containing Name, Company, and Email. Perfect for job seekers, recruiters, and anyone doing outreach at scale.</p>
             <div class="cta-buttons">
@@ -1021,9 +990,6 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <div class="footer-logo">
-                        <img src="logo-small.svg" alt="Emailly Logo" />
-                    </div>
                     <h3>EMAILLY</h3>
                     <p>Universal email outreach tool that works with any Excel contact list. Perfect for job seekers, recruiters, and sales teams.</p>
                 </div>
